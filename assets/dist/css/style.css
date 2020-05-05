@@ -1,0 +1,288 @@
+hr.new1 {
+    border-top: 1px solid #4f5962;
+    
+}
+blockquote.new1{
+    background: #fff;
+    border-left: .3rem solid #007bff;
+    margin: unset;
+    padding: 0px .7rem;
+}
+blockquote.brd-primary{
+    border-left: .3rem solid #007bff!important;
+}
+blockquote.brd-success{
+    border-left: .3rem solid #28a745!important;
+}
+blockquote.brd-warning{
+    border-left: .3rem solid #ffc107!important;
+}
+blockquote.brd-danger{
+    border-left: .3rem solid #dc3545!important;
+}
+/* TOASTR */
+.toast-custom {
+    overflow: hidden;
+    font-size: 0.875rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    background-clip: padding-box;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    border-radius: 0.25rem;
+}
+#toast-container-relative {
+    cursor: pointer;
+    pointer-events: none;
+}
+#toast-container-relative .toast-success {
+    background-color: #28a745;
+}
+#toast-container-relative>.toast-success {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==")!important;
+}
+#toast-container-relative>div {
+    position: relative;
+    pointer-events: auto;
+    overflow: hidden;
+    margin: 0 0 6px;
+    padding: 15px 30px 15px 50px;
+    width: 100%;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-position: 15px center;
+    background-repeat: no-repeat;
+    color: #FFF;
+    opacity: .8;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    filter: alpha(opacity=80);
+}
+#toast-container-relative * {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.postal-address{
+    margin-top: 5px;
+}
+@media (max-width: 600px){
+    .postal-address{
+        margin-top: 0px;
+    }
+}
+.select2-container{
+    width: 1%;
+    flex: 1 1 auto;
+}
+select
+{
+    color: #ccc !important;
+}
+option
+{
+    color: #000 !important;
+}
+option:first-child
+{
+    color: #ccc !important;
+}
+/* DASHBOARD ADMIN */
+.user-panel img {
+    height: 3.5rem;
+    width: auto;
+}
+
+/* TABLE*/
+/* Table User */
+.img-circle-table{
+    border-radius: 50%;
+    width: 2rem;
+    margin-top: -15px;
+    margin-bottom: -10px;
+    margin-right: 0.5rem;
+}
+/* Ensure that the demo table scrolls */
+th, td { 
+    white-space: nowrap; 
+}
+/* Lots of padding for the cells as SSP has limited data in the demo */
+.dataTables_wrapper th,
+.dataTables_wrapper td {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+.dataTables_wrapper .highlight td {
+    background-color: #f4f6f9;
+}
+.dataTables_wrapper table{
+    margin: 0 auto;
+    width: 100%;
+    clear: both;
+    border-collapse: collapse;
+    table-layout: fixed;
+    word-wrap:break-word; 
+}
+
+/* USER */
+
+.myprofile-img img{
+    width: 100%;
+}
+.myprofile-name{
+    font-size: 2rem;
+    color: #808080;
+    line-height: 1;
+    font-weight: bold;
+}
+.myprofile-participation{
+    font-size: medium;
+    line-height: 1;
+    color: #808080;
+    padding-left: 1px;
+    font-weight: bold;
+}
+.myprofile-participation span{
+    color: #007bff;
+}
+.myprofile-map{
+    font-size: small;
+    color: #808080;
+}
+.myprofile-sosmed{
+    font-size: 1.5rem;
+    text-align: center;
+}
+.myprofile-sosmed a.sosmed{
+    background-color: #007bff;
+    padding: 2px 7px;
+}
+.myprofile-sosmed i.sosmed{
+    width: 25px;
+    height: 25px;
+    color: #fff;
+    font-size: small;
+    vertical-align: middle;
+    line-height: inherit;
+}
+.myprofile-title{
+    font-weight: bold;
+    font-size: 1.8rem;
+    border-bottom: 1px solid #b9b9b9;
+    color: grey;
+}
+.myprofile-field{
+    font-size: 1.2rem;
+}
+.myprofile-icon{
+    width: 2rem;
+}
+
+.myprofile .tagl { 
+    width: 100%;
+    color: #c2c7d0;
+    font-size: x-small;
+    text-align: left;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+    line-height: 0.1em;
+    margin: 25px 0;
+} 
+.myprofile .tagl span { 
+    background: #fff;
+    padding-right: 4px;
+}
+.myprofile .tag{
+    color: #c2c7d0;
+    font-size: x-small;
+    width: 100%;;
+    margin: 25px 0;
+}
+.myprofile-info {
+    color: #808080;
+    font-size: small;
+}
+.myprofile-postaddress{
+    width: 50%;
+}
+.myprofile .contact-information{
+    font-size: 0.9rem;
+}
+.abstract{
+    font-family: auto;
+    padding: 2rem;
+}
+.abstract .title{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.abstract .authors{
+    width: 80%;
+    font-style: italic;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.abstract .institution{
+    font-style: italic;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    font-size: 0.9rem;
+}
+.abstract .email{
+    font-style: italic;
+    text-decoration: underline;
+    color: #007bff;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    font-size: 0.9rem; 
+    margin-bottom: 1rem;
+}
+.abstract .content{
+    text-align: justify;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+.abstract .keyword{
+    font-size: 0.9rem;
+}
+a.add-new-abs{
+    border: 1px dashed #c6cfdc;
+    color: #dde3ec;
+    background-color: #f4f6f9;
+    padding: 0.6rem;
+}
+a.add-new-abs:hover{
+    border: 1px dashed #dbe1eb;
+    color: #eef2f7;
+    background-color: #fdfdfd;
+}
+a.add-fp,
+a.add-rp{
+    border: 1px dashed #c6cfdc;
+    color: #dde3ec;
+    background-color: #f4f6f9;
+    padding: 0.6rem;
+}
+a.add-fp:hover,
+a.add-rp:hover{
+    border: 1px dashed #dbe1eb;
+    color: #eef2f7;
+    background-color: #fdfdfd;
+}
+@media (min-width: 576px){
+    #edit_abstract .modal-dialog{
+        max-width: 80%;
+    }
+}
+@media (min-width: 576px){
+    #add_paper .modal-dialog{
+        max-width: 50%;
+    }
+}
