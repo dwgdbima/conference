@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Participant\DashboardController as ParticipantDashboard;
+use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +18,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 */
 
 Route::get('/', function () {
-    Alert::alert('test', 'test sweetalert');
-    return view('web.admin.index');
+    return view('web.landingpage');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function () {
+    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('index');
+});
+
+Route::prefix('participant/')->name('participant.')->middleware(['participant'])->group(function () {
+    Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('index');
+});
+
+Route::prefix('reviewer/')->name('reviewer.')->middleware(['reviewer'])->group(function () {
+    Route::get('dashboard', [ReviewerDashboard::class, 'index'])->name('index');
+});

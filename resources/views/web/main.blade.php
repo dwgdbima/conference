@@ -46,11 +46,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
-                    <div class="row">
-                        @yield('content')
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
+                    @yield('content')
+                </div>
             </div>
             <!-- /.content -->
         </div>
@@ -60,8 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
             <div class="p-3">
-                <h5>Title</h5>
-                <p>Sidebar content</p>
+                <h5>Notification</h5>
             </div>
         </aside>
         <!-- /.control-sidebar -->

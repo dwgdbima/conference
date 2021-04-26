@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="card-body">
-        Admin
+        Reviewer
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
