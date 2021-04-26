@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('web.landingpage');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -29,7 +29,7 @@ Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function (
     Route::get('dashboard', [AdminDashboard::class, 'index'])->name('index');
 });
 
-Route::prefix('participant/')->name('participant.')->middleware(['participant'])->group(function () {
+Route::prefix('participant/')->name('participant.')->middleware(['participant', 'verified'])->group(function () {
     Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('index');
 });
 

@@ -19,7 +19,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('web.participant.index');
+        return view('web.participant.dashboard.index');
     }
 
     /**
