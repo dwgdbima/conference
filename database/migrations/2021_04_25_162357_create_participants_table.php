@@ -30,7 +30,7 @@ class CreateParticipantsTable extends Migration
             $table->string('city');
             $table->string('zip_code')->nullable();
             $table->string('country');
-            $table->string('photo');
+            $table->string('photo')->default('dist/img/profile-default.jpg');
             $table->string('info')->nullable();
             $table->string('participation');
             $table->string('research');
