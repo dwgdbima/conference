@@ -2,9 +2,15 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+// Admin
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+// Participant
 use App\Http\Controllers\Participant\DashboardController as ParticipantDashboard;
+use App\Http\Controllers\Participant\ProfileController as ParticipantProfile;
+use App\Http\Controllers\Participant\SubmissionSummaryController as ParticipantSubmissionSummary;
+// Reviewer
 use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboard;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +24,21 @@ use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboard;
 */
 
 Route::get('/', function () {
-    return view('web.landingpage');
+    return view('web.participant.layout.main');
 });
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function () {
-    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('index');
+    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('dashboard.index');
 });
 
 Route::prefix('participant/')->name('participant.')->middleware(['participant', 'verified'])->group(function () {
-    Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('index');
+    Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('dashboard.index');
+    Route::get('profile', [ParticipantProfile::class, 'index'])->name('profile.index');
+    Route::get('submission-summary', [ParticipantSubmissionSummary::class, 'index'])->name('submission-summary.index');
 });
 
 Route::prefix('reviewer/')->name('reviewer.')->middleware(['reviewer'])->group(function () {
