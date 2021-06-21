@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'research' => 'required|string|max:255',
             'email' => 'required|confirmed|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|min:6|max:12',
-            'phone' => 'required|string|max:255',
+            'phone' => 'required|string|max:255|unique:participants',
             'fax' => 'nullable|string|max:255',
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',

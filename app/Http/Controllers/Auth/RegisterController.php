@@ -76,6 +76,7 @@ class RegisterController extends Controller
         $user->role()->associate($role);
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
+        $user->active = 0;
         $user->save();
 
         return $user;
