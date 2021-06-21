@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ParticipantActivated;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'participant' => \App\Http\Middleware\Participant::class,
         'reviewer' => \App\Http\Middleware\Reviewer::class,
+        'activated' => \App\Http\Middleware\ParticipantActivated::class,
     ];
 }

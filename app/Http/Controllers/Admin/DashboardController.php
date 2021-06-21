@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->addMenuData('Dashboard', route('admin.dashboard.index'));
     }
 
     /**
@@ -20,7 +20,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('web.admin.dashboard.index');
+        return view('web.admin.dashboard.index')->with([
+            'menuData' => $this->menuData,
+        ]);
     }
 
     /**
