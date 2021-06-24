@@ -15,4 +15,14 @@ class Reviewer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function reviewAbstracts()
+    {
+        return $this->hasMany(Review_abstract::class);
+    }
+
+    public function reviewPapers()
+    {
+        return $this->hasMany(Review_paper::class);
+    }
 }

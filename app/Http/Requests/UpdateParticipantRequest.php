@@ -23,6 +23,11 @@ class UpdateParticipantRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->routeIs('admin.active-users.update')) {
+            $id = $this->active_user;
+        } else {
+            $id = $this->profile;
+        }
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -31,7 +36,7 @@ class UpdateParticipantRequest extends FormRequest
             'salutation' => 'required|string|max:255',
             'institution' => 'required|string|max:255',
             'research' => 'required|string|max:255',
-            'phone' => 'required|string|max:255|unique:participants,phone,' . $this->active_user,
+            'phone' => 'required|string|max:255|unique:participants,phone,' . $id,
             'fax' => 'nullable|string|max:255',
             'street' => 'required|string|max:255',
             'city' => 'required|string|max:255',

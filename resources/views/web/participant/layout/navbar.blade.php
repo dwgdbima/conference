@@ -15,18 +15,18 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="index3.html" class="nav-link">
+                    <a href="{{route('participant.dashboard.index')}}" class="nav-link">
                         <i class="fas fa-home"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('participant.profile.index')}}" class="nav-link">
                         <i class="fas fa-user"></i> Profile
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-chart-bar"></i> Submission Summary
+                    <a href="{{route('participant.submissions.index')}}" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Submission
                     </a>
                 </li>
                 <li class="nav-item">
