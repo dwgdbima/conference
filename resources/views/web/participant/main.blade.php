@@ -21,9 +21,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="card social-prof">
             <div class="card-body">
                 <div class="wrapper">
-                    <img src="{{asset(Auth::user()->participant->photo)}}" alt="" class="user-profile">
-                    <h3>{{ Auth::user()->participant->salutation . ' ' . Str::title(Auth::user()->participant->first_name) }}
-                    </h3>
+                    <div class="header w-100 text-center">
+                        <img src="{{asset(Auth::user()->participant->photo)}}" alt="" class="user-profile">
+                    </div>
                     @yield('content')
                 </div>
             </div>

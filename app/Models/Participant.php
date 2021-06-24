@@ -15,4 +15,19 @@ class Participant extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    public function abstract()
+    {
+        return $this->hasManyThrough(Submission::class, Abstractt::class);
+    }
+
+    public function paper()
+    {
+        return $this->hasManyThrough(Submission::class, Paper::class);
+    }
 }

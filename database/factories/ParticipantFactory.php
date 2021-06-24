@@ -35,7 +35,7 @@ class ParticipantFactory extends Factory
             'country' => $this->faker->country(),
             'participation' => $this->faker->randomElement(['presenter', 'non-presenter']),
             'research' => $this->faker->sentence(),
-            'photo' => 'profile-default.jpg',
+            'photo' => 'dist/img/profile-default.jpg',
         ];
     }
 }

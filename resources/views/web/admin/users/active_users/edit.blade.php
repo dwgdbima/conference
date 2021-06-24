@@ -1,12 +1,5 @@
 @extends('web.admin.main')
 @push('styles')
-<!-- icheck -->
-<link rel="stylesheet" href="{{asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="{{asset('vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-<!-- Select2 -->
-<link rel="stylesheet" href="{{asset('vendor/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endpush
 @section('content')
 <div class="card">
@@ -150,9 +143,4 @@
 </div>
 @endsection
 @push('scripts')
-<script src="{{asset('vendor/moment/moment.min.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- /.Select 2 -->
-<script src="{{asset('vendor/select2/js/select2.full.min.js')}}"></script>
 @endpush

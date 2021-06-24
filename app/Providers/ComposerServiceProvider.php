@@ -25,5 +25,6 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['components.forms.select-country'], 'App\Http\ViewComposers\CountriesComposer');
+        View::composer(['components.forms.select-topic'], 'App\Http\ViewComposers\TopicsComposer');
     }
 }

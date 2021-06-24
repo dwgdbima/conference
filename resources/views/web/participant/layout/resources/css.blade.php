@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('dist/css/app.css') }}">
-<link rel="stylesheet" href="{{ asset('dist/css/participant.css') }}">
+<link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
+<link rel="stylesheet" href="{{ mix('dist/css/participant.css') }}">
 
 @stack('styles')
