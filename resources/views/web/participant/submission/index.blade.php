@@ -37,6 +37,14 @@
                     href="{{route('download', $submission->payment_file)}}">{{Str::afterLast($submission->payment_file, '/')}}</a>
                 <a href="#" data-role="edit" data-type="payment" data-id="{{$submission->id}}"
                     class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> change</a>
+                @if ($submission->payment == 1)
+                <span class="badge badge-warning"><i class="fas fa-stopwatch"></i> process</span>
+                @elseif($submission->payment == 2)
+                <span class="badge badge-success"><i class="fas fa-checklist"></i> Accepted</span>
+                @else
+                <span class="badge badge-danger"><i class="fas fa-times"></i> Rejected</span>
+                @endif
+
                 @endisset
                 @empty($submission->payment_file)
                 <a href="#" data-role="create" data-type="payment" data-id="{{$submission->id}}"

@@ -115,7 +115,9 @@ class SubmissionController extends Controller
             Storage::delete($submission->payment_file);
         }
 
-        $submission->update(['payment_file' => $path]);
+        $submission->payment_file = $path;
+        $submission->payment = 1;
+        $submission->save();
 
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Payment Successful!');
     }
