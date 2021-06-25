@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Models\Participant;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use App\Notifications\ActionNewUser;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
-class NewUserController extends Controller
+class NewUserController extends BaseController
 {
     public function __construct()
     {
@@ -45,7 +46,7 @@ class NewUserController extends Controller
                 ->rawColumns(['name', 'action', 'id', 'user.email', 'phone', 'participation'])
                 ->make(true);
         }
-        return view('web.admin.users.new_users.index')->with(['menuData' => $this->menuData]);
+        return view('web.admin.users.new_users.index');
     }
 
     /**

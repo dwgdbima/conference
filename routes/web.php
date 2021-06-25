@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ActivatedController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\ActiveUserController;
 use App\Http\Controllers\Admin\NewUserController;
+use App\Http\Controllers\Admin\SubmissionController as AdminSubmission;
 
 // Participant
 use App\Http\Controllers\Participant\DashboardController as ParticipantDashboard;
@@ -17,10 +18,11 @@ use App\Http\Controllers\Participant\SubmissionController as ParticipantSubmissi
 
 // Reviewer
 use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboard;
-use App\Models\Submission;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-use function PHPUnit\Framework\isNull;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,7 @@ Route::get('home', function (Request $request) {
 Auth::routes(['verify' => true]);
 
 // ADMIN
-Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function () {
+Route::prefix('admin/')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', [AdminDashboard::class, 'index'])->name('dashboard.index');
     Route::resource('active-users', ActiveUserController::class)->except([
         'create', 'store'
@@ -53,6 +55,7 @@ Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function (
     Route::resource('new-users', NewUserController::class)->except([
         'create', 'store', 'show', 'edit'
     ]);
+    Route::resource('submissions', AdminSubmission::class);
 
     // ADMIN TESTING
     Route::get('test', function () {
@@ -60,7 +63,7 @@ Route::prefix('admin/')->name('admin.')->middleware(['admin'])->group(function (
 });
 
 // Participant
-Route::prefix('participant/')->name('participant.')->middleware(['participant', 'verified', 'activated'])->group(function () {
+Route::prefix('participant/')->name('participant.')->middleware(['auth', 'participant', 'verified', 'activated'])->group(function () {
     Route::get('activated', [ActivatedController::class, 'index'])->name('activated');
     Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('dashboard.index');
     Route::resource('profile', ParticipantProfile::class)->except([
@@ -82,14 +85,24 @@ Route::prefix('reviewer/')->name('reviewer.')->middleware(['reviewer'])->group(f
     Route::get('dashboard', [ReviewerDashboard::class, 'index'])->name('index');
 });
 
+Route::get('show/{path}', function ($path) {
+    $file = Storage::get($path);
+    $type = Str::afterLast($path, '.');
+
+    $response = Response::make($file, 200);
+    $response->header("Content-type", $type);
+
+    return $response;
+})->where('path', '.*')->name('show')->middleware('auth', 'verified', 'activated');
+
 Route::get('download/{path}', function ($path) {
-    return Storage::download($path);
+    $name = Str::replace('/', '-', $path);
+    $new_name = 'user-' . $name;
+    return Storage::download($path, $new_name);
 })->where('path', '.*')->name('download')->middleware('auth', 'verified', 'activated');
 
 Route::get('test', function () {
-    if (Storage::exists('user/11/abstract/pMwIPPcURRewmCdi3QOQqdVM7f8YxbStetuyEVId.pdf')) {
-        return 'ada';
-    } else {
-        return 'tidak ada';
-    }
+    $string = 'user/11/submission-16/abstract/fxGs0tTwGn0EE8KKiiIs6e2QN4Dqq8mxpH3skxgA.pdf';
+    $test = Str::replace('/', '-', $string);
+    return $test;
 });

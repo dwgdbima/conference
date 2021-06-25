@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Models\Participant;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Notifications\GenerateNewPassword;
@@ -14,7 +14,7 @@ use App\Http\Requests\UpdateParticipantRequest;
 use App\Http\Requests\GenerateNewPasswordRequest;
 use App\Notifications\DeleteUser;
 
-class ActiveUserController extends Controller
+class ActiveUserController extends BaseController
 {
 
     public function __construct()
@@ -53,7 +53,7 @@ class ActiveUserController extends Controller
                 ->rawColumns(['name', 'action', 'id', 'user.email', 'phone', 'participation'])
                 ->make(true);
         }
-        return view('web.admin.users.active_users.index')->with(['menuData' => $this->menuData]);
+        return view('web.admin.users.active_users.index');
     }
 
     /**
@@ -88,7 +88,6 @@ class ActiveUserController extends Controller
         $this->addMenuData('USER-' . $id, route('admin.active-users.show', $id));
         $participant = Participant::find($id);
         return view('web.admin.users.active_users.show')->with([
-            'menuData' => $this->menuData,
             'participant' => $participant,
         ]);
     }
@@ -107,7 +106,6 @@ class ActiveUserController extends Controller
         $participant = Participant::find($id);
 
         return view('web.admin.users.active_users.edit')->with([
-            'menuData' => $this->menuData,
             'participant' => $participant,
         ]);
     }

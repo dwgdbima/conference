@@ -71,10 +71,11 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-dollar-sign"></i>
+                <a href="{{route('admin.submissions.index')}}"
+                    class="nav-link {{request()->routeIs('admin.submissions.*') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-file-archive"></i>
                     <p>
-                        Payment Proofs
+                        Submissions
                     </p>
                 </a>
             </li>

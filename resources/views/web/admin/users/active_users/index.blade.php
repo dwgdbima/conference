@@ -4,7 +4,6 @@
 @endpush
 @section('content')
 <div class="card">
-
     <div class="card-body">
         <table id="users-table" class="table display nowrap row-border table-hover">
             <thead>
