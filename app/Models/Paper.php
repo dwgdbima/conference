@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paper extends Model
 {
-    protected $fillable = ['file', 'status_admin', 'comment_admin', 'file_admin', 'status_reviewer', 'comment_reviewer', 'file_reviewer'];
+    protected $fillable = ['file', 'first_decision', 'note_admin', 'file_admin', 'file_first_revise', 'file_first_revise_status', 'recomendation', 'note_reviewer', 'file_reviewer', 'file_second_revise', 'file_second_revise_status', 'final_decision', 'file_final'];
 
     use HasFactory;
 

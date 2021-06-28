@@ -49,8 +49,6 @@ class LoginController extends Controller
             case 'reviewer':
                 return '/reviewer/dashboard';
                 break;
-            default:
-                return '/home';
         }
     }
 

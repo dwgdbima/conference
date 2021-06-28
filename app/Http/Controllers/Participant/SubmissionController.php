@@ -166,6 +166,48 @@ class SubmissionController extends Controller
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Paper Successful!');
     }
 
+    public function storeFirstRevisePaper(PaperRequest $request, $id)
+    {
+        $request->validated();
+
+        $path = $request->file('paper_file')->store(
+            'user/' . Auth()->user()->participant->id . '/submission-' . $id . '/paper'
+        );
+
+        $submission = Submission::find($id);
+
+        if (Storage::exists($submission->paper->file_first_revise)) {
+            Storage::delete($submission->paper->file_first_revise);
+        }
+        $submission->paper()->update([
+            'file_first_revise' => $path,
+            'file_first_revise_status' => 1
+        ]);
+
+        return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Revised Paper Successful!');
+    }
+
+    public function storeSecondRevisePaper(PaperRequest $request, $id)
+    {
+        $request->validated();
+
+        $path = $request->file('paper_file')->store(
+            'user/' . Auth()->user()->participant->id . '/submission-' . $id . '/paper'
+        );
+
+        $submission = Submission::find($id);
+
+        if (Storage::exists($submission->paper->file_second_revise)) {
+            Storage::delete($submission->paper->file_second_revise);
+        }
+        $submission->paper()->update([
+            'file_second_revise' => $path,
+            'file_second_revise_status' => 1
+        ]);
+
+        return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Revised Paper Successful!');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
