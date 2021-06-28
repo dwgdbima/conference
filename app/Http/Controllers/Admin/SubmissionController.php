@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -56,9 +55,10 @@ class SubmissionController extends BaseController
                     }
                     return $result;
                 })
-                ->addColumn('action', function ($participant) {
-                    $result = '<a href="#" data-id="' . $participant->id . '" data-role="detail-submission" class="btn btn-xs btn-info"><i class="fas fa-search"></i></a>
-                    <a href="#" data-id="' . $participant->id . '" data-role="delete-submission" class="btn btn-xs btn-danger"><i class="fas fa-trash"></i></a>';
+                ->addColumn('action', function ($submission) {
+                    $result = '
+                    <a href="' . route('admin.submissions.show', $submission->id) . '" class="btn btn-xs btn-info"><i class="fas fa-search"></i></a>
+                    <a href="#" data-id="' . $submission->id . '" data-role="delete-submission" class="btn btn-xs btn-danger"><i class="fas fa-trash"></i></a>';
                     return $result;
                 })
                 ->rawColumns(['participant_id', 'payment', 'abstract.file', 'paper.file', 'action'])
@@ -96,11 +96,13 @@ class SubmissionController extends BaseController
      */
     public function show($id)
     {
-        $submission = Submission::with(['topic', 'abstract', 'paper'])->find($id);
+        $this->addMenuData('Detail Submission-' . $id, route('admin.submissions.show', $id));
 
+        $submission = Submission::with(['topic', 'abstract', 'paper'])->find($id);
         if (request()->ajax()) {
             return response()->json(['submission' => $submission]);
         }
+        return view('web.admin.submissions.show')->with(['submission' => $submission]);
     }
 
     /**

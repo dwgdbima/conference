@@ -1,0 +1,1 @@
+<span class="badge {{$badge}}"><i class="{{$fa}}"></i> {{$text}}</span>

@@ -19,12 +19,8 @@ class CreateAbstractsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('file');
-            $table->integer('status_admin')->default(1);
-            $table->string('comment_admin')->nullable();
-            $table->string('file_admin')->nullable();
-            $table->integer('status_reviewer')->default(1);
-            $table->string('comment_reviewer')->nullable();
-            $table->string('file_reviewer')->nullable();
+            $table->integer('decision')->default(0);
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

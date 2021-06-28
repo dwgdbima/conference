@@ -32,6 +32,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-header">Main</li>
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
@@ -71,6 +72,15 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a href="{{route('admin.reviewers.index')}}"
+                    class="nav-link {{request()->routeIs('admin.reviewers.*') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-user-graduate"></i>
+                    <p>
+                        Reviewers
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{route('admin.submissions.index')}}"
                     class="nav-link {{request()->routeIs('admin.submissions.*') ? 'active' : ''}}">
                     <i class="nav-icon fas fa-file-archive"></i>
@@ -80,49 +90,88 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-file-alt"></i>
-                    <p>
-                        Abstracts
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        <a href="./index.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Dashboard v1</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index2.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Dashboard v2</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-file-alt"></i>
-                    <p>
-                        Abstracts
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('admin.abstracts.index')}}"
+                    class="nav-link {{request()->routeIs('admin.abstracts.*') ? 'active' : ''}}">
                     <i class="nav-icon fas fa-file-alt"></i>
+                    <p>
+                        Abstracts
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('admin.papers.index')}}"
+                    class="nav-link {{request()->routeIs('admin.papers.*') ? 'active' : ''}}">
+                    <i class="nav-icon far fa-file-alt"></i>
                     <p>
                         Full Papers
                     </p>
                 </a>
             </li>
+            <li class="nav-item {{request()->routeIs('admin.admin-review.*') ? 'menu-open' : ''}}">
+                <a href="#" class="nav-link {{request()->routeIs('admin.admin-review.*') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-user-secret"></i>
+                    <p>
+                        Admin Review
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class=" nav-item">
+                        <a href="{{route('admin.admin-review.unreviews.index')}}"
+                            class="nav-link {{request()->routeIs('admin.admin-review.unreviews.*') ? 'active' : ''}}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Unreview Papers</p>
+                        </a>
+                    </li>
+                    <li class=" nav-item">
+                        <a href="{{route('admin.admin-review.review-results.index')}}"
+                            class="nav-link {{request()->routeIs('admin.admin-review.review-results.*') ? 'active' : ''}}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Review Result</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item {{request()->routeIs('admin.reviewer-reviews.*') ? 'menu-open' : ''}}">
+                <a href="#" class="nav-link {{request()->routeIs('admin.reviewer-reviews.*') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-user-graduate"></i>
+                    <p>
+                        Reviewer Reviews
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class=" nav-item">
+                        <a href="{{route('admin.reviewer-reviews.manage-reviews.index')}}"
+                            class="nav-link {{request()->routeIs('admin.reviewer-reviews.manage-reviews.*') ? 'active' : ''}}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Manage Reviews</p>
+                        </a>
+                    </li>
+                    <li class=" nav-item">
+                        <a href="{{route('admin.reviewer-reviews.review-results.index')}}"
+                            class="nav-link {{request()->routeIs('admin.reviewer-reviews.review-results.*') ? 'active' : ''}}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Review Result</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('admin.final-papers.index')}}"
+                    class="nav-link  {{request()->routeIs('admin.final-papers.*') ? 'active' : ''}}">
+                    <i class="nav-icon far fa-file-archive"></i>
+                    <p>
+                        Final Papers
+                    </p>
+                </a>
+            </li>
+            <li class="nav-header">Config</li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-file-signature"></i>
+                    <i class="nav-icon fas fa-cogs"></i>
                     <p>
-                        Revised Papers
+                        Configuration
                     </p>
                 </a>
             </li>
