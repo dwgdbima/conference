@@ -208,6 +208,26 @@ class SubmissionController extends Controller
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Revised Paper Successful!');
     }
 
+    public function storeFinalPaper(PaperRequest $request, $id)
+    {
+        $request->validated();
+
+        $path = $request->file('paper_file')->store(
+            'user/' . Auth()->user()->participant->id . '/submission-' . $id . '/paper'
+        );
+
+        $submission = Submission::find($id);
+
+        if (Storage::exists($submission->paper->file_final)) {
+            Storage::delete($submission->paper->file_final);
+        }
+        $submission->paper()->update([
+            'file_final' => $path
+        ]);
+
+        return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Final Paper Successful!');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
