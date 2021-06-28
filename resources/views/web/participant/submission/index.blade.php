@@ -10,7 +10,7 @@
 @forelse ($submissions as $submission)
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">Submission ID-{{$submission->id}}</h3>
+        <h3 class="card-title">Submission SUBM-{{$submission->id}}</h3>
 
         <div class="card-tools">
             <a type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -51,33 +51,176 @@
                     class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Upload</a>
                 @endempty
             </dd>
+            @empty($submission->abstract)
             <dt class="col-sm-2">Abstract</dt>
             <dd class="col-sm-10">
-                @isset($submission->abstract)
-                <a
-                    href="{{route('download', $submission->abstract->file)}}">{{Str::afterLast($submission->abstract->file, '/')}}</a>
-                <a href="#" data-role="edit" data-type="abstract" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> change</a>
-                @endisset
-                @empty($submission->abstract)
                 <a href="#" data-role="create" data-type="abstract" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Upload</a>
-                @endempty
+                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
             </dd>
+            @endempty
+            @empty($submission->paper)
             <dt class="col-sm-2">Full Paper</dt>
             <dd class="col-sm-10">
-                @isset($submission->paper)
-                <a
-                    href="{{route('download', $submission->paper->file)}}">{{Str::afterLast($submission->paper->file, '/')}}</a>
-                <a href="#" data-role="edit" data-type="paper" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> change</a>
-                @endisset
-                @empty($submission->paper)
                 <a href="#" data-role="create" data-type="paper" data-id="{{$submission->id}}"
                     class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Upload</a>
+            </dd>
+            @endempty
+        </dl>
+        @isset($submission->abstract)
+        <hr />
+        <h4>Abstract</h4>
+        <dl class="row">
+            <dt class="col-sm-2">Abstract File</dt>
+            <dd class="col-sm-10">
+                <x-download-file-name path="{{$submission->abstract->file}}" />
+                <a href="#" data-role="edit" data-type="abstract" data-id="{{$submission->id}}"
+                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+            </dd>
+            <dt class="col-sm-2">Decision</dt>
+            <dd class="col-sm-10">
+                <x-decision decision="{{$submission->abstract->decision}}" />
+            </dd>
+            <dt class="col-sm-2">Note</dt>
+            <dd class="col-sm-10">
+                @isset($submission->abstract->note)
+                {{$submission->abstract->note}}
+                @endisset
+                @empty($submission->abstract->note)
+                <span class="text-secondary font-italic">No Note</span>
                 @endempty
             </dd>
         </dl>
+        @endisset
+
+        @isset($submission->paper)
+        <hr />
+        <h4>Full Paper</h4>
+        <dl class="row">
+            <dt class="col-sm-2">Full Paper File</dt>
+            <dd class="col-sm-10">
+                <x-download-file-name path="{{$submission->paper->file}}" />
+                @if ($submission->paper->first_decision == 0)
+                <a href="#" data-role="edit" data-type="paper" data-id="{{$submission->id}}"
+                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+                @else
+                <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                        class="fas fa-lock"></i>
+                    Change</a>
+                @endif
+            </dd>
+            <dt class="col-sm-2">Admin Review</dt>
+            <dd class="col-sm-10">
+                <dl class="row">
+                    <dt class="col-sm-2 text-secondary">Decision</dt>
+                    <dd class="col-sm-10">
+                        <x-decision decision="{{$submission->paper->first_decision}}" />
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Note</dt>
+                    <dd class="col-sm-10">
+                        @isset($submission->paper->note_admin)
+                        {{$submission->paper->note_admin}}
+                        @endisset
+                        @empty($submission->paper->note_admin)
+                        <span class="text-secondary font-italic">No Note</span>
+                        @endempty
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Review File</dt>
+                    <dd class="col-sm-10">
+                        @isset($submission->paper->file_admin)
+                        {{$submission->paper->file_admin}}
+                        @endisset
+                        @empty($submission->paper->file_admin)
+                        <span class="text-secondary font-italic">No Note</span>
+                        @endempty
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Revised Paper</dt>
+                    <dd class="col-sm-10">
+                        @empty($submission->paper->file_first_revise)
+                        @if ($submission->paper->first_decision == 0)
+                        <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                                class="fas fa-lock"></i> Submit</a>
+                        @else
+                        <a href="#" data-role="create" data-type="file_first_revise" data-id="{{$submission->id}}"
+                            class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
+                        @endif
+                        @endempty
+
+                        @isset($submission->paper->file_first_revise)
+                        <x-download-file-name path="{{$submission->paper->file_first_revise}}" />
+                        @if ($submission->paper->file_first_revise_status == 0)
+                        <a href="#" data-role="create" data-type="file_first_revise" data-id="{{$submission->id}}"
+                            class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+                        @else
+                        <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                                class="fas fa-lock"></i>
+                            Change</a>
+                        @endif
+                        @endisset
+                    </dd>
+                </dl>
+            </dd>
+            <dt class="col-sm-2">Reviewer Review</dt>
+            <dd class="col-sm-10">
+                @isset($submission->paper->reviewPaper)
+                <dl class="row">
+                    <dt class="col-sm-2 text-secondary">Reviewer</dt>
+                    <dd class="col-sm-10">
+                        {{$submission->paper->reviewPaper->reviewer->name}}
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Decision</dt>
+                    <dd class="col-sm-10">
+                        <x-decision decision="{{$submission->paper->recomendation}}" />
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Note</dt>
+                    <dd class="col-sm-10">
+                        @isset($submission->paper->note_reviewer)
+                        {{$submission->paper->note_reviewer}}
+                        @endisset
+                        @empty($submission->paper->note_reviewer)
+                        <span class="text-secondary font-italic">No Note</span>
+                        @endempty
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Review File</dt>
+                    <dd class="col-sm-10">
+                        @isset($submission->paper->file_reviewer)
+                        {{$submission->paper->file_reviewer}}
+                        @endisset
+                        @empty($submission->paper->file_reviewer)
+                        <span class="text-secondary font-italic">No Note</span>
+                        @endempty
+                    </dd>
+                    <dt class="col-sm-2 text-secondary">Revised Paper</dt>
+                    <dd class="col-sm-10">
+                        @empty($submission->paper->file_second_revise)
+                        @if ($submission->paper->recomendation == 0)
+                        <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                                class="fas fa-lock"></i> Submit</a>
+                        @else
+                        <a href="#" data-role="create" data-type="file_second_revise" data-id="{{$submission->id}}"
+                            class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
+                        @endif
+                        @endempty
+
+                        @isset($submission->paper->file_second_revise)
+                        <x-download-file-name path="{{$submission->paper->file_second_revise}}" />
+                        @if ($submission->paper->file_second_revise_status == 0)
+                        <a href="#" data-role="create" data-type="file_second_revise" data-id="{{$submission->id}}"
+                            class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+                        @else
+                        <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                                class="fas fa-lock"></i>
+                            Change</a>
+                        @endif
+                        @endisset
+                    </dd>
+                </dl>
+                @endisset
+                @empty($submission->paper->reviewPaper)
+                <h5>Don't have a reviewer yet</h5>
+                @endempty
+            </dd>
+        </dl>
+        @endisset
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
@@ -125,9 +268,6 @@
         <div class="modal-content">
             <form action="" id="input-file-abstract-form" method="post" enctype="multipart/form-data">
                 @csrf
-                @isset($submission->abstract)
-                <input type="hidden" name="id" value="{{$submission->abstract->id}}">
-                @endisset
                 <div class="modal-header">
                     <h4 class="modal-title">Submit Abstract</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -155,9 +295,6 @@
         <div class="modal-content">
             <form action="" id="input-file-paper-form" method="post" enctype="multipart/form-data">
                 @csrf
-                @isset($submission->abstract)
-                <input type="hidden" name="id" value="{{$submission->abstract->id}}">
-                @endisset
                 <div class="modal-header">
                     <h4 class="modal-title">Submit Paper</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -166,6 +303,60 @@
                 </div>
                 <div class="modal-body">
                     <x-forms.input-file id="paper_file" name="paper_file" placeholder="Choose File" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+{{-- FIRST REVISE PAPER --}}
+<div class="modal fade" id="modal-file-first-revise-paper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" id="input-file-first-revise-paper-form" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Submit Paper</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <x-forms.input-file id="paper_file_first_revise" name="paper_file" placeholder="Choose File" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+{{-- SECOND REVISE PAPER --}}
+<div class="modal fade" id="modal-file-second-revise-paper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" id="input-file-second-revise-paper-form" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Submit Paper</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <x-forms.input-file id="paper_file_second_revise" name="paper_file" placeholder="Choose File" />
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -235,6 +426,42 @@
             $('#input-file-paper-form').attr('action', url);
             $('#modal-file-paper .modal-title').html(title);
             $('#modal-file-paper').modal('show');
+
+        })
+        
+        $(document).on('click', 'a[data-type="file_first_revise"]', function(event) {
+            event.preventDefault();
+
+            let id = $(this).data('id'),
+                role = $(this).data('role'),
+                url = '{{route("participant.submissions.first-revise-paper", ":id")}}',
+                title = '';
+
+            url = url.replace(':id', id);
+            
+            role == 'create' ? title = 'Add Revise Paper' : title = 'Update Revise Paper';
+
+            $('#input-file-first-revise-paper-form').attr('action', url);
+            $('#modal-file-first-revise-paper .modal-title').html(title);
+            $('#modal-file-first-revise-paper').modal('show');
+
+        })
+
+        $(document).on('click', 'a[data-type="file_second_revise"]', function(event) {
+            event.preventDefault();
+
+            let id = $(this).data('id'),
+                role = $(this).data('role'),
+                url = '{{route("participant.submissions.second-revise-paper", ":id")}}',
+                title = '';
+
+            url = url.replace(':id', id);
+            
+            role == 'create' ? title = 'Add Revise Paper' : title = 'Update Revise Paper';
+
+            $('#input-file-second-revise-paper-form').attr('action', url);
+            $('#modal-file-second-revise-paper .modal-title').html(title);
+            $('#modal-file-second-revise-paper').modal('show');
 
         })
     })

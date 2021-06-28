@@ -47,11 +47,7 @@ use Illuminate\Support\Str;
 */
 
 Route::get('/', function () {
-    return view('web.participant.layout.main');
-});
-
-Route::get('home', function (Request $request) {
-    return 'home';
+    return redirect()->route('login');
 });
 
 Auth::routes(['verify' => true]);
@@ -136,7 +132,9 @@ Route::prefix('participant/')->name('participant.')->middleware(['auth', 'partic
     Route::resource('submissions', ParticipantSubmission::class);
     Route::post('submissions/{submission}/payment', [ParticipantSubmission::class, 'storePayment'])->name('submissions.payment');
     Route::post('submissions/{submission}/abstract', [ParticipantSubmission::class, 'storeAbstract'])->name('submissions.abstract');
-    Route::post('submissions/{submission}/paper', [ParticipantSubmission::class, 'storepaper'])->name('submissions.paper');
+    Route::post('submissions/{submission}/paper', [ParticipantSubmission::class, 'storePaper'])->name('submissions.paper');
+    Route::post('submissions/{submission}/first-revise-paper', [ParticipantSubmission::class, 'storeFirstRevisePaper'])->name('submissions.first-revise-paper');
+    Route::post('submissions/{submission}/second-revise-paper', [ParticipantSubmission::class, 'storeSecondRevisePaper'])->name('submissions.second-revise-paper');
 
     // PARTICIPANT TESTING
     Route::get('test', function () {
