@@ -8,7 +8,7 @@ class Select2 extends Component
 {
     public $id, $name, $label;
     public $topclass, $inputclass;
-    public $disabled, $required, $multiple;
+    public $disabled, $required, $multiple, $placeholder;
     /**
      * Create a new component instance.
      *
@@ -20,6 +20,7 @@ class Select2 extends Component
         $label = null,
         $topclass = null,
         $inputclass = null,
+        $placeholder = null,
         $disabled = false,
         $required = false,
         $multiple = false
@@ -29,6 +30,7 @@ class Select2 extends Component
         $this->label = $label;
         $this->topclass = $topclass;
         $this->inputclass = $inputclass;
+        $this->placeholder = $placeholder;
         $this->required = $required;
         $this->disabled = $disabled;
         $this->multiple = $multiple;

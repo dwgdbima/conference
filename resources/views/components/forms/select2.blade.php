@@ -18,7 +18,7 @@
 @push('scripts')
 <script>
     $(()=>{ $('#{{$id}}').select2({ 
-        placeholder: 'salutation',
+        placeholder: '{{$placeholder}}',
         theme: 'bootstrap4' ,
         dropdownCssClass : 'bigdrop',
         }); 

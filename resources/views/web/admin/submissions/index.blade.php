@@ -120,6 +120,7 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
+                console.log('sukses');
                 let img = '{{route("show", ":path")}}',
                     html;
                 
@@ -175,51 +176,6 @@
             })
         })
     });
-
-// DETAIL SUBMISSION
-    $(document).on('click', 'a[data-role="detail-submission"]', function(event) {
-        event.preventDefault();
-
-        let id = $(this).data('id'),
-            url = '{{route("admin.submissions.show", ":id")}}';
-        url = url.replace(':id', id);
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                let html;
-                html = `
-                    <dl class="row">
-                        <dt class="col-sm-3">Presenter</dt>
-                        <dd class="col-sm-9">${response.submission.presenter}</dd>
-                        <dt class="col-sm-3">Title</dt>
-                        <dd class="col-sm-9">${response.submission.title}</dd>
-                        <dt class="col-sm-3">Topic</dt>
-                        <dd class="col-sm-9">${response.submission.topic.name}</dd>
-                        <dt class="col-sm-3">Type</dt>
-                        <dd class="col-sm-9">${response.submission.type}</dd>
-                        <dt class="col-sm-3">Payment</dt>
-                        <dd class="col-sm-9">${response.submission.payment_file == null ? 
-                            '<span class="text-secondary font-italic">no payment</span>' : 
-                            `<a href="/download/${response.submission.payment_file}">download</a>`}</dd>
-                        <dt class="col-sm-3">Abstract</dt>
-                        <dd class="col-sm-9">${response.submission.abstract == null ? 
-                            '<span class="text-secondary font-italic">no abstract</span>' : 
-                            `<a href="/download/${response.submission.abstract.file}">download</a>`}</dd>
-                        <dt class="col-sm-3">Paper</dt>
-                        <dd class="col-sm-9">${response.submission.paper == null ? 
-                            '<span class="text-secondary font-italic">no paper</span>' : 
-                            `<a href="/download/${response.submission.paper.file}">download</a>`}</dd>
-                    </dl>
-                    `
-                $('#modal-detail .modal-body').html(html);
-                $('#modal-detail').modal('show');
-            }
-        })
-            
-    })
 
 // DELETE SUBMISSION
     $(document).on('click', 'a[data-role="delete-submission"]', function(event) {

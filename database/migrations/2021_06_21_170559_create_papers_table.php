@@ -19,12 +19,18 @@ class CreatePapersTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('file');
-            $table->integer('status_admin')->default(1);
-            $table->string('comment_admin')->nullable();
+            $table->integer('first_decision')->default(0);
+            $table->string('note_admin')->nullable();
             $table->string('file_admin')->nullable();
-            $table->integer('status_reviewer')->default(1);
-            $table->string('comment_reviewer')->nullable();
+            $table->string('file_first_revise')->nullable();
+            $table->integer('file_first_revise_status')->default(0);
+            $table->integer('recomendation')->default(0);
+            $table->string('note_reviewer')->nullable();
             $table->string('file_reviewer')->nullable();
+            $table->string('file_second_revise')->nullable();
+            $table->integer('file_second_revise_status')->default(0);
+            $table->integer('final_decision')->default(0);
+            $table->string('file_final')->nullable();
             $table->timestamps();
         });
     }

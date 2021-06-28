@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reviewer extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'password'];
 
     use HasFactory;
 
