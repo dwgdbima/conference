@@ -204,7 +204,7 @@
                         @isset($submission->paper->file_second_revise)
                         <x-download-file-name path="{{$submission->paper->file_second_revise}}" />
                         @if ($submission->paper->file_second_revise_status == 0)
-                        <a href="#" data-role="create" data-type="file_second_revise" data-id="{{$submission->id}}"
+                        <a href="#" data-role="edit" data-type="file_second_revise" data-id="{{$submission->id}}"
                             class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
                         @else
                         <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
@@ -218,6 +218,26 @@
                 @empty($submission->paper->reviewPaper)
                 <h5>Don't have a reviewer yet</h5>
                 @endempty
+            </dd>
+            <dt class="col-sm-2">Final Paper</dt>
+            <dd class="col-sm-10">
+                @if ($submission->paper->final_decision == 1)
+
+                @isset($submission->paper->file_final)
+                <x-download-file-name path="{{$submission->paper->file_final}}" />
+                <a href="#" data-role="edit" data-type="file_final" data-id="{{$submission->id}}"
+                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+                @endisset
+                @empty($submission->paper->file_final)
+                <a href="#" data-role="create" data-type="file_final" data-id="{{$submission->id}}"
+                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
+                @endempty
+
+                @else
+                <a href="#" class="btn btn-secondary btn-xs disabled" role="button" aria-disabled="true"><i
+                        class="fas fa-lock"></i>
+                    Submit</a>
+                @endif
             </dd>
         </dl>
         @endisset
@@ -370,6 +390,33 @@
 </div>
 <!-- /.modal -->
 
+{{-- FINAL PAPER --}}
+<div class="modal fade" id="modal-final-paper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" id="input-final-paper-form" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Submit Paper</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <x-forms.input-file id="final_paper" name="paper_file" placeholder="Choose File" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 @endsection
 
 @push('scripts')
@@ -462,6 +509,24 @@
             $('#input-file-second-revise-paper-form').attr('action', url);
             $('#modal-file-second-revise-paper .modal-title').html(title);
             $('#modal-file-second-revise-paper').modal('show');
+
+        })
+        
+        $(document).on('click', 'a[data-type="file_final"]', function(event) {
+            event.preventDefault();
+
+            let id = $(this).data('id'),
+                role = $(this).data('role'),
+                url = '{{route("participant.submissions.final-paper", ":id")}}',
+                title = '';
+
+            url = url.replace(':id', id);
+            
+            role == 'create' ? title = 'Add Final Paper' : title = 'Update Final Paper';
+
+            $('#input-final-paper-form').attr('action', url);
+            $('#modal-final-paper .modal-title').html(title);
+            $('#modal-final-paper').modal('show');
 
         })
     })

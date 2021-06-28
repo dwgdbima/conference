@@ -29,6 +29,7 @@ use App\Models\Participant;
 use App\Models\Submission;
 use App\Models\Topic;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -135,6 +136,7 @@ Route::prefix('participant/')->name('participant.')->middleware(['auth', 'partic
     Route::post('submissions/{submission}/paper', [ParticipantSubmission::class, 'storePaper'])->name('submissions.paper');
     Route::post('submissions/{submission}/first-revise-paper', [ParticipantSubmission::class, 'storeFirstRevisePaper'])->name('submissions.first-revise-paper');
     Route::post('submissions/{submission}/second-revise-paper', [ParticipantSubmission::class, 'storeSecondRevisePaper'])->name('submissions.second-revise-paper');
+    Route::post('submissions/{submission}/final-paper', [ParticipantSubmission::class, 'storeFinalPaper'])->name('submissions.final-paper');
 
     // PARTICIPANT TESTING
     Route::get('test', function () {
@@ -145,6 +147,11 @@ Route::prefix('participant/')->name('participant.')->middleware(['auth', 'partic
 // Reviewer
 Route::prefix('reviewer/')->name('reviewer.')->middleware(['reviewer'])->group(function () {
     Route::get('dashboard', [ReviewerDashboard::class, 'index'])->name('index');
+});
+
+Route::get('force-logout', function () {
+    Auth::logout();
+    return redirect()->route('login');
 });
 
 Route::get('show/{path}', function ($path) {
