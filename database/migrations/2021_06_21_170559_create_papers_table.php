@@ -23,12 +23,12 @@ class CreatePapersTable extends Migration
             $table->string('note_admin')->nullable();
             $table->string('file_admin')->nullable();
             $table->string('file_first_revise')->nullable();
-            $table->integer('file_first_revise_status')->default(0);
+            $table->integer('file_first_revise_status')->default(1);
             $table->integer('recomendation')->default(0);
             $table->string('note_reviewer')->nullable();
             $table->string('file_reviewer')->nullable();
             $table->string('file_second_revise')->nullable();
-            $table->integer('file_second_revise_status')->default(0);
+            $table->integer('file_second_revise_status')->default(1);
             $table->integer('final_decision')->default(0);
             $table->string('file_final')->nullable();
             $table->timestamps();
