@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AdminSeeder::class,
             TopicSeeder::class,
-            // ParticipantSeeder::class,
-            // ReviewerSeeder::class,
-            // SubmissionSeeder::class,
-            // AbstractSeeder::class,
-            // PaperSeeder::class,
-            // ReviewPaperSeeder::class,
+            ParticipantSeeder::class,
+            ReviewerSeeder::class,
+            SubmissionSeeder::class,
+            AbstractSeeder::class,
+            PaperSeeder::class,
+            ReviewPaperSeeder::class,
         ]);
     }
 }
