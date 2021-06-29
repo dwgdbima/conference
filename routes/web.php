@@ -22,14 +22,11 @@ use App\Http\Controllers\Participant\ProfileController as ParticipantProfile;
 use App\Http\Controllers\Participant\SubmissionController as ParticipantSubmission;
 
 // Reviewer
-use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboard;
-use App\Models\Abstractt;
-use App\Models\Paper;
+use App\Http\Controllers\Reviewer\Reviewer;
+
+// ELSE
 use App\Models\Participant;
-use App\Models\Submission;
-use App\Models\Topic;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Http\JsonResponse;
+use App\Models\Review_paper;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -145,9 +142,7 @@ Route::prefix('participant/')->name('participant.')->middleware(['auth', 'partic
 });
 
 // Reviewer
-Route::prefix('reviewer/')->name('reviewer.')->middleware(['reviewer'])->group(function () {
-    Route::get('dashboard', [ReviewerDashboard::class, 'index'])->name('index');
-});
+Route::resource('reviewers', Reviewer::class)->middleware(['auth', 'reviewer']);
 
 Route::get('force-logout', function () {
     Auth::logout();

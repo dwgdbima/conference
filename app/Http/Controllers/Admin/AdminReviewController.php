@@ -63,6 +63,7 @@ class AdminReviewController extends BaseController
         $paper = Paper::with(['submission.participant', 'submission.topic'])->find($id);
         $paper->first_decision = $request->first_decision;
         $paper->note_admin = $request->note_admin;
+        $paper->file_first_revise_status = 0;
 
         if ($request->hasFile('file_admin')) {
             $path = $request->file('file_admin')->store(

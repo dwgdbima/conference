@@ -3,13 +3,6 @@
 @section('box-msg', 'Register a new membership')
 
 @section('styles')
-<!-- icheck -->
-<link rel="stylesheet" href="{{asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="{{asset('vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-<!-- Select2 -->
-<link rel="stylesheet" href="{{asset('vendor/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
 <style>
     .login-page {
@@ -169,7 +162,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3"><label for="">Postal Address</label></div>
+        <div class="col-md-3"><label for="">More Information</label></div>
         <div class="col-md-9">
             <x-forms.textarea id="info" name="info" placeholder="Some information ..." rows="5">
             </x-forms.textarea>
@@ -184,9 +177,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{asset('vendor/moment/moment.min.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- /.Select 2 -->
-<script src="{{asset('vendor/select2/js/select2.full.min.js')}}"></script>
+
 @endsection

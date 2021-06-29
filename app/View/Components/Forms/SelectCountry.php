@@ -44,6 +44,6 @@ class SelectCountry extends Component
      */
     public function render()
     {
-        return view('components.forms.select-topic');
+        return view('components.forms.select-country');
     }
 }

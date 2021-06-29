@@ -155,12 +155,17 @@ class SubmissionController extends Controller
         $submission = Submission::find($id);
 
         if (is_null($submission->paper)) {
-            $submission->paper()->create(['file' => $path]);
+            $submission->paper()->create([
+                'file' => $path,
+                'file_first_revise_status' => 1
+            ]);
         } else {
             if (Storage::exists($submission->paper->file)) {
                 Storage::delete($submission->paper->file);
             }
-            $submission->paper()->update(['file' => $path]);
+            $submission->paper()->update([
+                'file' => $path,
+            ]);
         }
 
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Paper Successful!');

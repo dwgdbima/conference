@@ -62,7 +62,7 @@
             <dt class="col-sm-2">Full Paper</dt>
             <dd class="col-sm-10">
                 <a href="#" data-role="create" data-type="paper" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Upload</a>
+                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
             </dd>
             @endempty
         </dl>
@@ -127,7 +127,7 @@
                     <dt class="col-sm-2 text-secondary">Review File</dt>
                     <dd class="col-sm-10">
                         @isset($submission->paper->file_admin)
-                        {{$submission->paper->file_admin}}
+                        <x-download-file-name path="{{$submission->paper->file_admin}}" />
                         @endisset
                         @empty($submission->paper->file_admin)
                         <span class="text-secondary font-italic">No Note</span>
