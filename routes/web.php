@@ -27,6 +27,7 @@ use App\Http\Controllers\Reviewer\Reviewer;
 // ELSE
 use App\Models\Participant;
 use App\Models\Review_paper;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -51,6 +52,9 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 // ADMIN
+Route::get('admin', function () {
+    return redirect()->route('admin.dashboard.index');
+})->name('admin')->middleware(['auth', 'admin']);
 Route::prefix('admin/')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     // Dashboard
@@ -121,6 +125,12 @@ Route::prefix('admin/')->name('admin.')->middleware(['auth', 'admin'])->group(fu
 });
 
 // Participant
+Route::get(
+    'participant',
+    function () {
+        return redirect()->route('participant.dashboard.index');
+    }
+)->name('participant')->middleware(['auth', 'participant']);
 Route::prefix('participant/')->name('participant.')->middleware(['auth', 'participant', 'verified', 'activated'])->group(function () {
     Route::get('activated', [ActivatedController::class, 'index'])->name('activated');
     Route::get('dashboard', [ParticipantDashboard::class, 'index'])->name('dashboard.index');
@@ -165,6 +175,26 @@ Route::get('download/{path}', function ($path) {
     return Storage::download($path, $new_name);
 })->where('path', '.*')->name('download')->middleware('auth', 'verified', 'activated');
 
+Route::get('downloadzip', function () {
+    $zip_file = 'icemine_data.zip';
+    $zip = new ZipArchive();
+    $zip->open($zip_file, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+    $path = storage_path('app/user');
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+    foreach ($files as $name => $file) {
+        if (!$file->isDir()) {
+            $filePath = $file->getRealPath();
+
+            $relativePath = 'user/' . substr($filePath, strlen($path) + 1);
+
+            $zip->addFile($filePath, $relativePath);
+        }
+    }
+    $zip->close();
+    return response()->download($zip_file);
+});
+
 Route::get('test', function () {
-    $test = Participant::find(1);
+    echo Auth()->user()->role->name;
 });

@@ -32,12 +32,9 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
 
-    public function redirectTo()
+    protected $redirectTo = '/admin/dashboard';
+    protected function redirectTo()
     {
         switch (Auth()->user()->role->name) {
             case 'admin':
@@ -47,9 +44,14 @@ class LoginController extends Controller
                 return '/participant/dashboard';
                 break;
             case 'reviewer':
-                return '/reviewer/dashboard';
+                return '/reviewers';
                 break;
         }
+    }
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
     }
 
     public function showLoginForm()

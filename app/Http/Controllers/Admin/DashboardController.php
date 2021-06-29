@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\Paper;
+use App\Models\Participant;
+use App\Models\Submission;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends BaseController
@@ -20,9 +24,128 @@ class DashboardController extends BaseController
      */
     public function index()
     {
-        return view('web.admin.dashboard.index');
+        return view('web.admin.dashboard.index')->with([
+            'user' => $this->_countUser(),
+            'submission' => $this->_countSubmission(),
+            'review' => $this->_countReview(),
+            'final_paper' => $this->_countFinalPaper(),
+            'chart' => $this->_chart(),
+            'paper_review' => $this->_paperReview(),
+            'new_users' => $this->_newUsers(),
+            'added_papers' => $this->_addedPaper(),
+        ]);
     }
 
+    private function _countUser()
+    {
+        $active_user = Participant::whereHas('user', function ($user) {
+            $user->where('active', 1);
+        })->count();
+        $total_user = Participant::all()->count();
+        $percentage = ($active_user / $total_user) * 100;
+
+
+        $count_user = [
+            'active' => $active_user,
+            'total' => $total_user,
+            'percentage' => $percentage,
+        ];
+
+        return $count_user;
+    }
+
+    private function _countSubmission()
+    {
+        $total_submission = Submission::all()->count();
+        $paid_submission = Submission::where('payment', 1)->count();
+        $percentage = ($paid_submission / $total_submission) * 100;
+
+        $count_submission = [
+            'total' => $total_submission,
+            'paid' => $paid_submission,
+            'percentage' => $percentage,
+        ];
+
+        return $count_submission;
+    }
+
+    private function _countReview()
+    {
+        $total = Paper::all()->count();
+        $review = Paper::where('first_decision', '>=', 1)->count();
+        $percentage = ($review / $total) * 100;
+
+        $count_review = [
+            'total' => $total,
+            'review' => $review,
+            'percentage' => $percentage,
+        ];
+
+        return $count_review;
+    }
+
+    private function _countFinalPaper()
+    {
+        $total = Paper::all()->count();
+        $final_paper = Paper::whereNotNull('file_final')->count();
+        $percentage = ($final_paper / $total) * 100;
+
+        $count_final_paper = [
+            'total' => $total,
+            'final_paper' => $final_paper,
+            'percentage' => $percentage,
+        ];
+
+        return $count_final_paper;
+    }
+
+    private function _chart()
+    {
+        $chart_range = Carbon::today()->toFormattedDateString() . ' - ' . Carbon::today()->subWeeks(4)->toFormattedDateString();
+        $label = [
+            Carbon::today()->format('d M'),
+            Carbon::today()->subWeeks(1)->format('d M'),
+            Carbon::today()->subWeeks(2)->format('d M'),
+            Carbon::today()->subWeeks(3)->format('d M'),
+            Carbon::today()->subWeeks(4)->format('d M'),
+        ];
+
+        $data = [
+            'chart_range' => $chart_range,
+            'label' => $label
+        ];
+
+        return $data;
+    }
+
+    private function _paperReview()
+    {
+        $undecide = Paper::where('first_decision', 0)->count();
+        $accepted = Paper::where('first_decision', 1)->count();
+        $revise = Paper::where('first_decision', 2)->count();
+        $rejected = Paper::where('first_decision', 3)->count();
+
+        $paper_review = [
+            'undecide' => $undecide,
+            'accepted' => $accepted,
+            'revise' => $revise,
+            'rejected' => $rejected,
+        ];
+
+        return $paper_review;
+    }
+
+    private function _newUsers()
+    {
+        $users = Participant::with('user')->orderBy('created_at', 'desc')->limit(7)->get();
+        return $users;
+    }
+
+    private function _addedPaper()
+    {
+        $paper = Paper::with('submission.participant')->orderBy('created_at', 'desc')->limit(5)->get();
+        return $paper;
+    }
     /**
      * Show the form for creating a new resource.
      *
