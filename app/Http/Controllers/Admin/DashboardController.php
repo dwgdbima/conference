@@ -42,8 +42,11 @@ class DashboardController extends BaseController
             $user->where('active', 1);
         })->count();
         $total_user = Participant::all()->count();
-        $percentage = ($active_user / $total_user) * 100;
-
+        if ($total_user == 0) {
+            $percentage = 0;
+        } else {
+            $percentage = ($active_user / $total_user) * 100;
+        }
 
         $count_user = [
             'active' => $active_user,
@@ -58,7 +61,11 @@ class DashboardController extends BaseController
     {
         $total_submission = Submission::all()->count();
         $paid_submission = Submission::where('payment', 1)->count();
-        $percentage = ($paid_submission / $total_submission) * 100;
+        if ($paid_submission == 0) {
+            $percentage = 0;
+        } else {
+            $percentage = ($paid_submission / $total_submission) * 100;
+        }
 
         $count_submission = [
             'total' => $total_submission,
@@ -73,7 +80,11 @@ class DashboardController extends BaseController
     {
         $total = Paper::all()->count();
         $review = Paper::where('first_decision', '>=', 1)->count();
-        $percentage = ($review / $total) * 100;
+        if ($review == 0) {
+            $percentage = 0;
+        } else {
+            $percentage = ($review / $total) * 100;
+        }
 
         $count_review = [
             'total' => $total,
@@ -88,7 +99,11 @@ class DashboardController extends BaseController
     {
         $total = Paper::all()->count();
         $final_paper = Paper::whereNotNull('file_final')->count();
-        $percentage = ($final_paper / $total) * 100;
+        if ($final_paper == 0) {
+            $percentage = 0;
+        } else {
+            $percentage = ($final_paper / $total) * 100;
+        }
 
         $count_final_paper = [
             'total' => $total,

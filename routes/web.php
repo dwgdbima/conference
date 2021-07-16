@@ -196,5 +196,8 @@ Route::get('downloadzip', function () {
 });
 
 Route::get('test', function () {
-    echo Auth()->user()->role->name;
+    $active_user = Participant::whereHas('user', function ($user) {
+        $user->where('active', 1);
+    })->count();
+    echo $active_user / 0;
 });

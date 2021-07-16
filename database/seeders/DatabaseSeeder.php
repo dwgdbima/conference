@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
             TopicSeeder::class,
             ParticipantSeeder::class,
             ReviewerSeeder::class,
-            SubmissionSeeder::class,
-            AbstractSeeder::class,
-            PaperSeeder::class,
-            ReviewPaperSeeder::class,
+            // SubmissionSeeder::class,
+            // AbstractSeeder::class,
+            // PaperSeeder::class,
+            // ReviewPaperSeeder::class,
         ]);
     }
 }

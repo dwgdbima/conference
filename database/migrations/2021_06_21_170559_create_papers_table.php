@@ -20,12 +20,12 @@ class CreatePapersTable extends Migration
                 ->onDelete('cascade');
             $table->string('file');
             $table->integer('first_decision')->default(0);
-            $table->string('note_admin')->nullable();
+            $table->text('note_admin')->nullable();
             $table->string('file_admin')->nullable();
             $table->string('file_first_revise')->nullable();
             $table->integer('file_first_revise_status')->default(1);
             $table->integer('recomendation')->default(0);
-            $table->string('note_reviewer')->nullable();
+            $table->text('note_reviewer')->nullable();
             $table->string('file_reviewer')->nullable();
             $table->string('file_second_revise')->nullable();
             $table->integer('file_second_revise_status')->default(1);

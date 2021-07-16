@@ -20,7 +20,7 @@ class CreateAbstractsTable extends Migration
                 ->onDelete('cascade');
             $table->string('file');
             $table->integer('decision')->default(0);
-            $table->string('note')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
