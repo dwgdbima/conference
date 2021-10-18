@@ -10,9 +10,12 @@ use App\Http\Requests\SubmissionRequest;
 use App\Models\Abstractt;
 use App\Models\Paper;
 use App\Models\Submission;
+use App\Models\User;
+use App\Notifications\SubmitPaper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isNull;
 
@@ -168,6 +171,15 @@ class SubmissionController extends Controller
             ]);
         }
 
+        $user = User::find(Auth::user()->id);
+
+        $notificationData = [
+            'name' => $user->participant->salutation . ' ' . Str::title($user->participant->first_name) . ' ' . Str::title($user->participant->last_name),
+            'action' => 1,
+        ];
+
+        $user->notify(new SubmitPaper($notificationData));
+
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Paper Successful!');
     }
 
@@ -188,6 +200,15 @@ class SubmissionController extends Controller
             'file_first_revise' => $path,
             'file_first_revise_status' => 1
         ]);
+
+        $user = User::find(Auth::user()->id);
+
+        $notificationData = [
+            'name' => $user->participant->salutation . ' ' . Str::title($user->participant->first_name) . ' ' . Str::title($user->participant->last_name),
+            'action' => 1,
+        ];
+
+        $user->notify(new SubmitPaper($notificationData));
 
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Revised Paper Successful!');
     }
@@ -210,6 +231,15 @@ class SubmissionController extends Controller
             'file_second_revise_status' => 1
         ]);
 
+        $user = User::find(Auth::user()->id);
+
+        $notificationData = [
+            'name' => $user->participant->salutation . ' ' . Str::title($user->participant->first_name) . ' ' . Str::title($user->participant->last_name),
+            'action' => 1,
+        ];
+
+        $user->notify(new SubmitPaper($notificationData));
+
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Revised Paper Successful!');
     }
 
@@ -229,6 +259,15 @@ class SubmissionController extends Controller
         $submission->paper()->update([
             'file_final' => $path
         ]);
+
+        $user = User::find(Auth::user()->id);
+
+        $notificationData = [
+            'name' => $user->participant->salutation . ' ' . Str::title($user->participant->first_name) . ' ' . Str::title($user->participant->last_name),
+            'action' => 1,
+        ];
+
+        $user->notify(new SubmitPaper($notificationData));
 
         return redirect()->route('participant.submissions.index')->with('toast_success', 'Add Final Paper Successful!');
     }

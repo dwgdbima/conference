@@ -24,7 +24,7 @@ class PaperRequest extends FormRequest
     public function rules()
     {
         return [
-            'paper_file' => 'required|mimes:doc,docx,pdf|max:2048'
+            'paper_file' => 'required|mimes:doc,docx|max:15000'
         ];
     }
 }

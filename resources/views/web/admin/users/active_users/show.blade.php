@@ -115,16 +115,16 @@
                                                 <span class="badge badge-warning">Pending</span>
                                                 @endswitch
                                             </dd>
-                                            <dt class="col-sm-2">Abstract</dt>
+                                            {{-- <dt class="col-sm-2">Abstract</dt>
                                             <dd class="col-sm-10">
                                                 @isset($submission->abstract)
                                                 <a
                                                     href="{{route('admin.abstracts.show', $submission->abstract->id)}}">ABS-{{$submission->abstract->id}}</a>
-                                                @endisset
-                                                @empty($submission->abstract)
-                                                <span class="text-secondary font-italic">No Abstract</span>
-                                                @endempty
-                                            </dd>
+                                            @endisset
+                                            @empty($submission->abstract)
+                                            <span class="text-secondary font-italic">No Abstract</span>
+                                            @endempty
+                                            </dd> --}}
                                             <dt class="col-sm-2">Full Paper</dt>
                                             <dd class="col-sm-10">
                                                 @isset($submission->paper)

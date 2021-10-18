@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\ReviewerReviewController;
 use App\Http\Controllers\Admin\FinalPaperController as AdminFinalPaper;
 use App\Http\Controllers\Admin\ReviewerController;
+
 // Participant
 use App\Http\Controllers\Participant\DashboardController as ParticipantDashboard;
 use App\Http\Controllers\Participant\ProfileController as ParticipantProfile;
@@ -25,9 +26,6 @@ use App\Http\Controllers\Participant\SubmissionController as ParticipantSubmissi
 use App\Http\Controllers\Reviewer\Reviewer;
 
 // ELSE
-use App\Models\Participant;
-use App\Models\Review_paper;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -173,7 +171,7 @@ Route::get('download/{path}', function ($path) {
     $name = Str::replace('/', '-', $path);
     $new_name = 'user-' . $name;
     return Storage::download($path, $new_name);
-})->where('path', '.*')->name('download')->middleware('auth', 'verified', 'activated');
+})->where('path', '.*')->name('download');
 
 Route::get('downloadzip', function () {
     $zip_file = 'icemine_data.zip';
@@ -193,11 +191,4 @@ Route::get('downloadzip', function () {
     }
     $zip->close();
     return response()->download($zip_file);
-});
-
-Route::get('test', function () {
-    $active_user = Participant::whereHas('user', function ($user) {
-        $user->where('active', 1);
-    })->count();
-    echo $active_user / 0;
 });

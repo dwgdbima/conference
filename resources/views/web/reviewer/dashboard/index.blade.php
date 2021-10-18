@@ -7,8 +7,8 @@
     <li class="nav-item">
         <a class="nav-link @if($loop->first)active @endif" id="fp-{{$review_paper->paper_id}}-tab" data-toggle="pill"
             href="#fp-{{$review_paper->paper_id}}" role="tab" aria-controls="fp-{{$review_paper->paper_id}}"
-            aria-selected="true">FP-{{$review_paper->paper_id}} @if ($review_paper->paper->file_second_revise_status ==
-            1)
+            aria-selected="true">SUBM-{{$review_paper->paper->submission_id}}
+            @if ($review_paper->paper->file_second_revise_status == 1)
             <span class="badge badge-danger">new</span>
             @endif</a>
     </li>

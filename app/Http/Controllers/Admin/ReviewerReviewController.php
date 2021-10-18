@@ -9,6 +9,7 @@ use App\Models\Review_paper;
 use App\Models\Reviewer;
 use App\Models\User;
 use App\Notifications\FinalDecision;
+use App\Notifications\SendPaperToReviewer;
 use App\View\Components\Decision;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -57,6 +58,22 @@ class ReviewerReviewController extends BaseController
         $review_paper->paper_id = $request->paper_id;
         $review_paper->reviewer_id = $request->reviewer_id;
         $review_paper->save();
+
+        $reviewer = Reviewer::find($request->reviewer_id);
+        $paper = Paper::find($request->paper_id);
+
+        $file = !is_null($paper->file_first_revise) ? $paper->file_first_revise : $paper->file;
+
+        $notificationData = [
+            'name' => $reviewer->name,
+            'presenter' => $paper->submission->presenter,
+            'title' =>  $paper->submission->title,
+            'topic' => $paper->submission->topic->name,
+            'subm_id' => $paper->submission_id,
+            'file' => '<a href="' . route('download', $file) . '">download</a>'
+        ];
+
+        $reviewer->user->notify(new SendPaperToReviewer($notificationData));
 
         return redirect()->back()->with('toast_success', 'Paper has been sent to reviewer!');
     }

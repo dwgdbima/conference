@@ -89,15 +89,15 @@
                     </p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{route('admin.abstracts.index')}}"
-                    class="nav-link {{request()->routeIs('admin.abstracts.*') ? 'active' : ''}}">
-                    <i class="nav-icon fas fa-file-alt"></i>
-                    <p>
-                        Abstracts
-                    </p>
-                </a>
-            </li>
+            class="nav-link {{request()->routeIs('admin.abstracts.*') ? 'active' : ''}}">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>
+                Abstracts
+            </p>
+            </a>
+            </li> --}}
             <li class="nav-item">
                 <a href="{{route('admin.papers.index')}}"
                     class="nav-link {{request()->routeIs('admin.papers.*') ? 'active' : ''}}">

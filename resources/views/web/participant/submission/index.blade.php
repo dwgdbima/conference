@@ -51,13 +51,13 @@
                     class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Upload</a>
                 @endempty
             </dd>
-            @empty($submission->abstract)
+            {{-- @empty($submission->abstract)
             <dt class="col-sm-2">Abstract</dt>
             <dd class="col-sm-10">
                 <a href="#" data-role="create" data-type="abstract" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
+            class="btn btn-primary btn-xs"><i class="fas fa-upload"></i> Submit</a>
             </dd>
-            @endempty
+            @endempty --}}
             @empty($submission->paper)
             <dt class="col-sm-2">Full Paper</dt>
             <dd class="col-sm-10">
@@ -66,31 +66,31 @@
             </dd>
             @endempty
         </dl>
-        @isset($submission->abstract)
+        {{-- @isset($submission->abstract)
         <hr />
         <h4>Abstract</h4>
         <dl class="row">
             <dt class="col-sm-2">Abstract File</dt>
             <dd class="col-sm-10">
                 <x-download-file-name path="{{$submission->abstract->file}}" />
-                <a href="#" data-role="edit" data-type="abstract" data-id="{{$submission->id}}"
-                    class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
-            </dd>
-            <dt class="col-sm-2">Decision</dt>
-            <dd class="col-sm-10">
-                <x-decision decision="{{$submission->abstract->decision}}" />
-            </dd>
-            <dt class="col-sm-2">Note</dt>
-            <dd class="col-sm-10">
-                @isset($submission->abstract->note)
-                {{$submission->abstract->note}}
-                @endisset
-                @empty($submission->abstract->note)
-                <span class="text-secondary font-italic">No Note</span>
-                @endempty
-            </dd>
+        <a href="#" data-role="edit" data-type="abstract" data-id="{{$submission->id}}"
+            class="btn btn-primary btn-xs"><i class="fas fa-edit"></i> Change</a>
+        </dd>
+        <dt class="col-sm-2">Decision</dt>
+        <dd class="col-sm-10">
+            <x-decision decision="{{$submission->abstract->decision}}" />
+        </dd>
+        <dt class="col-sm-2">Note</dt>
+        <dd class="col-sm-10">
+            @isset($submission->abstract->note)
+            {{$submission->abstract->note}}
+            @endisset
+            @empty($submission->abstract->note)
+            <span class="text-secondary font-italic">No Note</span>
+            @endempty
+        </dd>
         </dl>
-        @endisset
+        @endisset --}}
 
         @isset($submission->paper)
         <hr />
@@ -183,7 +183,7 @@
                     <dt class="col-sm-2 text-secondary">Review File</dt>
                     <dd class="col-sm-10">
                         @isset($submission->paper->file_reviewer)
-                        {{$submission->paper->file_reviewer}}
+                        <x-download-file-name path="{{$submission->paper->file_reviewer}}" />
                         @endisset
                         @empty($submission->paper->file_reviewer)
                         <span class="text-secondary font-italic">No Note</span>
