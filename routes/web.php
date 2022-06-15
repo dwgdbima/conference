@@ -24,7 +24,7 @@ use App\Http\Controllers\Participant\SubmissionController as ParticipantSubmissi
 
 // Reviewer
 use App\Http\Controllers\Reviewer\Reviewer;
-
+use App\Models\Paper;
 // ELSE
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -116,10 +116,7 @@ Route::prefix('admin/')->name('admin.')->middleware(['auth', 'admin'])->group(fu
 
     // Final Paper
     Route::get('/final-papers', [AdminFinalPaper::class, 'index'])->name('final-papers.index');
-
-    // ADMIN TESTING
-    Route::get('test', function () {
-    });
+    Route::post('/send-loa', [AdminFinalPaper::class, 'sendLoa'])->name('final-papers.send-loa');
 });
 
 // Participant
@@ -142,11 +139,6 @@ Route::prefix('participant/')->name('participant.')->middleware(['auth', 'partic
     Route::post('submissions/{submission}/first-revise-paper', [ParticipantSubmission::class, 'storeFirstRevisePaper'])->name('submissions.first-revise-paper');
     Route::post('submissions/{submission}/second-revise-paper', [ParticipantSubmission::class, 'storeSecondRevisePaper'])->name('submissions.second-revise-paper');
     Route::post('submissions/{submission}/final-paper', [ParticipantSubmission::class, 'storeFinalPaper'])->name('submissions.final-paper');
-
-    // PARTICIPANT TESTING
-    Route::get('test', function () {
-        // 
-    });
 });
 
 // Reviewer

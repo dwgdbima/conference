@@ -30,4 +30,9 @@ class Participant extends Model
     {
         return $this->hasManyThrough(Submission::class, Paper::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->salutation} {$this->first_name} {$this->last_name}";
+    }
 }

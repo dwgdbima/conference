@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Paper;
+use App\Notifications\SendLoa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yajra\DataTables\Facades\DataTables;
 
 class FinalPaperController extends BaseController
@@ -36,11 +39,41 @@ class FinalPaperController extends BaseController
                     return $html;
                 })
                 ->addColumn('action', function ($paper) {
-                    return '<a href="' . route('admin.papers.show', $paper->id) . '" class="btn btn-xs btn-info"><i class="fas fa-search"></i> Detail</a>';
+                    $detail = '<a href="' . route('admin.papers.show', $paper->id) . '" class="btn btn-xs btn-info"><i class="fas fa-search"></i> Detail</a>';
+                    $loa = '<a href="#" onclick="sendLoa(event, ' . $paper->id . ')" class="btn btn-xs btn-primary"><i class="fas fa-paper-plane"></i> Send LoA</a>';
+                    return $detail . ' ' . $loa;
                 })
                 ->rawColumns(['submission_id', 'submission.participant_id', 'file_final', 'action'])
                 ->make(true);
         }
         return view('web.admin.final-papers.index');
+    }
+
+    public function sendLoa(Request $request)
+    {
+        $papers = Paper::find($request->id);
+        $title = $papers->submission->title;
+        $institution = $papers->submission->participant->institution;
+        $name = $papers->submission->participant->full_name;
+
+        $templateProcessor = new TemplateProcessor('LoA.docx');
+        $templateProcessor->setValue('name', $name);
+        $templateProcessor->setValue('title', $title);
+        $templateProcessor->setValue('institution', $institution);
+        $path = public_path('Letter_of_acceptance.docx');
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+        $templateProcessor->saveAs('Letter_of_acceptance.docx');
+
+        $notificationData = [
+            'name' => $name,
+            'path' => $path,
+        ];
+
+        $user = $papers->submission->participant->user;
+        $user->notify(new SendLoa($notificationData));
+
+        return response()->json(['subm_title' => $title, 'name' => $name]);
     }
 }

@@ -47,5 +47,41 @@
                 }
         ]
     });
+
+    function sendLoa(e, id)
+    {
+        e.preventDefault();
+        swal.fire({
+            title: "Send LoA",
+            text: "Are you sure you want to send LoA?",
+            icon: "question",    
+            showCancelButton: true,
+            confirmButtonText: "Send",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '{{route("admin.final-papers.send-loa")}}',
+                    data: {
+                        '_method': 'POST',
+                        '_token': '{{csrf_token()}}',
+                        'id': id,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        $('#papers-table').DataTable().ajax.reload();
+                        Swal.fire({
+                            "title":"LoA successfully sent!",
+                            "text":"","showConfirmButton":false,
+                            "icon":"success",
+                            "toast":true,
+                            "position":"top-end",
+                            "showCloseButton":true
+                        });
+                    },
+                });
+            }
+        });
+    }
 </script>
 @endpush
